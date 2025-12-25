@@ -5,17 +5,17 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 # Recommended
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "8333471140:")
-APP_ID = int(os.environ.get("APP_ID", ""))
-API_HASH = os.environ.get("API_HASH", "")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "8062906456:AAHN_cr6ybhB8TpZJWMGuGQlYUomfjYLXJc")
+APP_ID = int(os.environ.get("APP_ID", "30067763"))
+API_HASH = os.environ.get("API_HASH", "7db9cdb966b1d8e9615f592d68e3ae3f")
 
 # Main
-OWNER_ID = int(os.environ.get("OWNER_ID", "7813956229"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "6619630745"))
 PORT = os.environ.get("PORT", "8080")
 
 # Database
-DB_URI = os.environ.get("DB_URI", "=majority&appName=Cluster")
-DB_NAME = os.environ.get("DB_NAME", "link")
+DB_URI = os.environ.get("DB_URI", "mongodb+srv://RejwanulAlom:<db_password>@cluster0.gmd07bl.mongodb.net/?appName=Cluster0")
+DB_NAME = os.environ.get("DB_NAME", "LinkschangerRobot")
 
 #Auto approve 
 CHAT_ID = [int(app_chat_id) if id_pattern.search(app_chat_id) else app_chat_id for app_chat_id in environ.get('CHAT_ID', '').split()] # dont change anything 
@@ -69,7 +69,7 @@ except ValueError:
 
 # Admin == OWNER_ID
 ADMINS.append(OWNER_ID)
-ADMINS.append(7813956229)
+ADMINS.append(6619630745)
 
 
 logging.basicConfig(
