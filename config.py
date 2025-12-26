@@ -14,7 +14,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "6619630745"))
 PORT = os.environ.get("PORT", "8080")
 
 # Database
-DB_URI = os.environ.get("DB_URI", "mongodb+srv://RejwanulAlom:<db_password>@cluster0.gmd07bl.mongodb.net/?appName=Cluster0")
+DB_URI = os.environ.get("DB_URI", "mongodb+srv://RejwanulAlom:<rejwanul>@cluster0.gmd07bl.mongodb.net/?appName=Cluster0")
 DB_NAME = os.environ.get("DB_NAME", "LinkschangerRobot")
 
 #Auto approve 
