@@ -1,40 +1,55 @@
-from config import FORCE_CHANNEL_ID, FORCE_CHANNEL_USERNAME
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.error import BadRequest
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.enums import ChatMemberStatus
+from pyrogram.errors import UserNotParticipant
+
+from config import FSUB_CHANNELS
 
 
-def check_force_sub(update, context):
-    """
-    Returns True if user is subscribed
-    Returns False and sends join message if not subscribed
-    """
+async def get_fsub_channels():
+    return FSUB_CHANNELS
 
-    if FORCE_CHANNEL_ID == 0:
-        return True
 
-    user = update.effective_user
-    if not user:
-        return True
+async def check_subscription_status(client, user_id, channels):
+    not_joined = []
 
-    try:
-        member = context.bot.get_chat_member(
-            chat_id=FORCE_CHANNEL_ID,
-            user_id=user.id
-        )
-        if member.status in ["member", "administrator", "creator"]:
-            return True
-    except BadRequest:
-        pass
+    for channel in channels:
+        try:
+            member = await client.get_chat_member(channel, user_id)
+            if member.status not in (
+                ChatMemberStatus.MEMBER,
+                ChatMemberStatus.ADMINISTRATOR,
+                ChatMemberStatus.OWNER
+            ):
+                not_joined.append(channel)
+        except UserNotParticipant:
+            not_joined.append(channel)
+        except Exception:
+            pass
 
-    buttons = [
-        [InlineKeyboardButton("📢 Join Channel", url=FORCE_CHANNEL_USERNAME)],
-        [InlineKeyboardButton("✅ Recheck", callback_data="fsub_recheck")]
-    ]
+    if not not_joined:
+        return True, None, None
+
+    buttons = []
+
+    for ch in not_joined:
+        buttons.append([
+            InlineKeyboardButton(
+                "📢 Join ANIME IN HINDI",
+                url="https://t.me/Lite_Anime_Hindi"
+            )
+        ])
+
+    buttons.append([
+        InlineKeyboardButton("✅ Check Again", callback_data="check_sub")
+    ])
 
     text = (
-        "🚫 **You must join our channel to use this bot**\n\n"
-        "👉 Join the channel first\n"
-        "👉 Then press **Recheck**"
+        "<b>🚨 ACCESS DENIED!</b>\n\n"
+        "You must join <b>ANIME IN HINDI</b> channel to use this bot.\n\n"
+        "👇 Join the channel and then click <b>Check Again</b>"
+    )
+
+    return False, text, InlineKeyboardMarkup(buttons)        "👉 Then press **Recheck**"
     )
 
     if update.message:
