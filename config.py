@@ -3,7 +3,10 @@ import os
 from os import environ
 import logging
 from logging.handlers import RotatingFileHandler
-
+# ---------------- FORCE SUBSCRIBE (NEW) ----------------
+FORCE_CHANNEL_ID = int(os.environ.get("FORCE_CHANNEL_ID", "0"))
+FORCE_CHANNEL_USERNAME = os.environ.get("FORCE_CHANNEL_USERNAME", "")
+# ------------------------------------------------------
 # Recommended
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "8062906456:AAHN_cr6ybhB8TpZJWMGuGQlYUomfjYLXJc")
 APP_ID = int(os.environ.get("APP_ID", "30067763"))
