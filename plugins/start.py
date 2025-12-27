@@ -1,11 +1,17 @@
-# +++ Modified By Yato [telegram username: @i_killed_my_clan & @ProYato] +++ # aNDI BANDI SANDI JISNE BHI CREDIT HATAYA USKI BANDI RAndi 
+# +++ Modified By Yato [telegram username: @i_killed_my_clan & @ProYato] +++
 import asyncio
 import base64
 import time
 from collections import defaultdict
 from pyrogram import Client, filters
-from pyrogram.enums import ParseMode, ChatMemberStatus, ChatAction
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
+from pyrogram.enums import ParseMode, ChatMemberStatus
+from pyrogram.types import (
+    Message,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    CallbackQuery,
+    InputMediaPhoto
+)
 from pyrogram.errors import FloodWait, UserNotParticipant
 
 from bot import Bot
@@ -15,12 +21,10 @@ from database.database import *
 from plugins.newpost import revoke_invite_after_5_minutes
 from helper_func import *
 
+# ✅ FORCE SUB IMPORT
+from plugins.fsub import get_fsub_channels, check_subscription_status
 
 user_banned_until = {}
-
-# Broadcast variables
-cancel_lock = asyncio.Lock()
-is_canceled = False
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def start_command(client: Bot, message: Message):
@@ -29,23 +33,20 @@ async def start_command(client: Bot, message: Message):
     if user_id in user_banned_until:
         if datetime.now() < user_banned_until[user_id]:
             return await message.reply_text(
-                "<b><blockquote expandable>You are temporarily banned from using commands due to spamming. Try again later.</b>",
+                "<b>You are temporarily banned. Try again later.</b>",
                 parse_mode=ParseMode.HTML
             )
-            
-    await add_user(user_id)
-# 
-    # Check FSub requirements
-   #  fsub_channels = await get_fsub_channels()
-   #  if fsub_channels:
-    #     is_subscribed, subscription_message, subscription_buttons = await check_subscription_status(client, user_id, fsub_channels)
-   #      if not is_subscribed:
-    #         return await message.reply_text(
-    #             subscription_message,
-    #             reply_markup=subscription_buttons,
-    #             parse_mode=ParseMode.HTML
-     #        )
 
+    await add_user(user_id)
+
+    # 🔐 FORCE SUBSCRIBE CHECK
+    fsub_channels = await get_fsub_channels()
+    if fsub_channels:
+        is_subscribed, sub_text, sub_buttons = await check_subscription_status(
+            client, user_id, fsub_channels
+        )
+        if not is_subscribed:
+            return await message.re
     text = message.text
     if len(text) > 7:
         try:
