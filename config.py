@@ -5,7 +5,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 # ---------------- FORCE SUBSCRIBE (NEW) ----------------
 FORCE_CHANNEL_ID = int(os.environ.get("FORCE_CHANNEL_ID", "-1002093278365"))
-FORCE_CHANNEL_USERNAME = os.environ.get("FORCE_CHANNEL_USERNAME", "@LITE_ANIME_HINDI")
 # ------------------------------------------------------
 # Recommended
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "8062906456:AAHN_cr6ybhB8TpZJWMGuGQlYUomfjYLXJc")
